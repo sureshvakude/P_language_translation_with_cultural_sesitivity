@@ -2,13 +2,16 @@ import React, { useState } from 'react';
 
 function TranslationUI() {
   const [englishText, setEnglishText] = useState('');
-  const [marathiText, setMarathiText] = useState('');
+  const [translatedText, setTranslatedText] = useState('');
   const [loading, setLoading] = useState(false);
+  const [selectedLanguage, setSelectedLanguage] = useState('marathi');
 
   const handleTranslate = () => {
     setLoading(true); // Set loading to true when starting the translation
 
-    fetch('http://127.0.0.1:5000/translate', {
+    const apiUrl = getTranslationAPIUrl(selectedLanguage);
+
+    fetch(apiUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -22,24 +25,80 @@ function TranslationUI() {
         return response.json();
       })
       .then((data) => {
-        setMarathiText(data.translatedText);
+        setTranslatedText(data.translatedText);
       })
       .catch((error) => {
         console.error('Error:', error);
-        setMarathiText('प्रतिसाद मिळाला नाही');
+        setTranslatedText(getErrorMessage(selectedLanguage));
       })
       .finally(() => {
         setLoading(false); // Reset loading after receiving the response or encountering an error
       });
   };
 
+  const getErrorMessage = (language) => {
+    switch (language) {
+      case 'marathi':
+        return 'प्रतिसाद मिळाला नाही';
+      case 'hindi':
+        return 'जवाब मिला नहीं';
+      case 'japanese':
+        return '回答がありません';
+      case 'telugu':
+        return 'సమాధానం లేదు';
+      default:
+        return '';
+    }
+  };
+
+  const getTranslationAPIUrl = (language) => {
+    switch (language) {
+      case 'marathi':
+        return 'http://127.0.0.1:5000/translateEngToMar';
+      case 'hindi':
+        return 'http://127.0.0.1:5000/translateEngToHin';
+      case 'japanese':
+        return 'http://127.0.0.1:5000/translateEngToJpn';
+      case 'telugu':
+        return 'http://127.0.0.1:5000/translateEngToTel';
+      default:
+        return '';
+    }
+  };
+
+  const getPlaceholderText = () => {
+    switch (selectedLanguage) {
+      case 'marathi':
+        return 'प्रतीक्षा करा...';
+      case 'hindi':
+        return 'थोड़ी देर रुकिए...';
+      case 'japanese':
+        return '少し待ってください...';
+      case 'telugu':
+        return 'కొన్ని కాలం ఆయితే...';
+      default:
+        return '';
+    }
+  };
+
   return (
-    <section className="translation-ui mt-5 mb-5">
+    <section className="translation-ui mt-5 mb-5" id='translationUI'>
       <div className="container">
         <div className="row">
           <div className="col-md-12 mt-5">
-            <h2 className="text-center mb-4">Translate English to Marathi</h2>
+            <h2 className="text-center mb-4">Translate Language</h2>
           </div>
+        </div>
+        <div className='dropDown'>
+          <select 
+            className="form-control" 
+            value={selectedLanguage} 
+            onChange={(e) => setSelectedLanguage(e.target.value)}>
+            <option value="marathi">Marathi</option>
+            <option value="hindi">Hindi</option>
+            <option value="japanese">Japanese</option>
+            <option value="telugu">Telugu</option>
+          </select>
         </div>
         <div className="row">
           <div className="col-md-6 mt-5">
@@ -55,8 +114,7 @@ function TranslationUI() {
             <textarea
               className="form-control"
               rows="10"
-              placeholder="Marathi"
-              value={loading ? 'प्रतीक्षा करा...' : marathiText}
+              placeholder={loading ? getPlaceholderText() : translatedText}
               readOnly
             ></textarea>
           </div>

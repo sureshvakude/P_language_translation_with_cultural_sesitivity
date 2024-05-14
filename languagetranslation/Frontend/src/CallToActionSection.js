@@ -1,5 +1,9 @@
 import React from 'react';
 
+function scrollToTranslationUI(){
+  document.getElementById('translationUI').scrollIntoView({ behavior: 'smooth' });
+}
+
 function CallToActionSection() {
   return (
     <section className="article13 cid-u87MqKTDvN" id="call-to-action-3-u87MqKTDvN">
@@ -12,7 +16,7 @@ function CallToActionSection() {
                   <strong>Ready to Dive into Marathi Magic?</strong>
                 </h4>
                 <div className="mbr-section-btn mt-4">
-                  <a className="btn btn-primary display-4" href="/">Start Translating</a>
+                  <button className="btn btn-primary display-4" onClick={()=>scrollToTranslationUI()}>Start Translating</button>
                 </div>
               </div>
             </div>

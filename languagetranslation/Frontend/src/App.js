@@ -1,6 +1,5 @@
 import AboutUsSection from "./AboutUsSection";
 import CallToActionSection from "./CallToActionSection";
-import ContactForm from "./ContactForm";
 import ContactSection from "./ContactSection";
 import FAQSection from "./FAQSection";
 import FeaturesSection from "./FeaturesSection";
@@ -13,7 +12,6 @@ import HeaderWithVideo from "./HeaderWithVideo";
 import ImageSection from "./ImageSection";
 import Navbar from "./Navbar";
 import SocialMediaSection from "./SocialMediaSection";
-import TeamSection from "./TeamSection";
 import TestimonialsSection from "./TestimonialsSection";
 import TranslationUI from "./TranslationUI";
 
@@ -34,7 +32,6 @@ function App() {
    <FeaturesSectionOver/>
    <FullscreenImageSection/>
    <SocialMediaSection/>
-   <ContactForm/>
    <ContactSection/>
    <Footer/>
    </>

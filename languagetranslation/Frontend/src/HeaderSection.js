@@ -1,5 +1,9 @@
 import React from 'react';
 
+function scrollToTranslationUI(){
+  document.getElementById('translationUI').scrollIntoView({ behavior: 'smooth' });
+}
+
 function HeaderSection() {
   return (
     <section className="header16 cid-u87MqKS3DT mbr-fullscreen mbr-parallax-background" id="hero-17-u87MqKS3DT">
@@ -11,7 +15,7 @@ function HeaderSection() {
               <strong>Magic Translate</strong>
             </h1>
             <p className="mbr-fonts-style mbr-text mbr-white mb-4 display-7">Unleash the Power of Instant Translation from English to Marathi with a Click!</p>
-            <div className="mbr-section-btn"><a className="btn btn-white-outline display-7" href="#">Translate Now</a></div>
+            <div className="mbr-section-btn"><button className="btn btn-white-outline display-7" onClick={()=>scrollToTranslationUI()}>Translate Now</button></div>
           </div>
         </div>
       </div>
